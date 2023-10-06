@@ -322,7 +322,7 @@ GameObject:
   - component: {fileID: 1158429990}
   - component: {fileID: 1158429989}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: Planeta
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
