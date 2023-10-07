@@ -4,61 +4,61 @@ using UnityEngine;
 using System;
 using System.Net;
 using System.IO;
-using System.Text.Json.Serialization;
+using System.Text.Json;
 
-
-public struct Planeta_json
+[System.Serializable]
+public class Planeta_json
     {
-        int kepid;
-        string kepoi_name;
-        string kepler_name;
-        string koi_disposition;
-        string koi_pdisposition;
-        double koi_score;
-        double koi_fpflag_nt;
-        double koi_fpflag_ss;
-        double koi_fpflag_co;
-        double koi_fpflag_ec;
-        double koi_period;
-        double koi_period_err1;
-        double koi_period_err2;
-        double koi_time0bk;
-        double intkoi_time0bk_err1;
-        double koi_time0bk_err2;
-        double koi_impact;
-        double koi_impact_err1;
-        double koi_impact_err2;
-        double koi_duration;
-        double koi_duration_err1;
-        double koi_duration_err2;
-        double koi_depth;
-        double koi_depth_err1;
-        double koi_depth_err2;
-        double koi_prad;
-        double koi_prad_err1;
-        double koi_prad_err2;
-        double koi_teq;
-        double koi_teq_err1;
-        double koi_teq_err2;
-        double koi_insol;
-        double koi_insol_err1;
-        double koi_insol_err2;
-        double koi_model_snr;
-        double koi_tce_plnt_num;
-        double koi_tce_delivname;
-        double koi_steff;
-        double koi_steff_err1;
-        double koi_steff_err2;
-        double koi_slogg;
-        double koi_slogg_err1;
-        double koi_slogg_err2;
-        double koi_srad;
-        double koi_srad_err1;
-        double koi_srad_err2;
-        string ra_str;
-        string dec_str;
-        double koi_kepmag;
-        double koi_kepmag_err;
+        public double kepid;
+        public string kepoi_name;
+        public string kepler_name;
+        public string koi_disposition;
+        public string koi_pdisposition;
+        public double koi_score;
+        public double koi_fpflag_nt;
+        public double koi_fpflag_ss;
+        public double koi_fpflag_co;
+        public double koi_fpflag_ec;
+        public double koi_period;
+        public double koi_period_err1;
+        public double koi_period_err2;
+        public double koi_time0bk;
+        public double intkoi_time0bk_err1;
+        public double koi_time0bk_err2;
+        public double koi_impact;
+        public double koi_impact_err1;
+        public double koi_impact_err2;
+        public double koi_duration;
+        public double koi_duration_err1;
+        public double koi_duration_err2;
+        public double koi_depth;
+        public double koi_depth_err1;
+        public double koi_depth_err2;
+        public double koi_prad;
+        public double koi_prad_err1;
+        public double koi_prad_err2;
+        public double koi_teq;
+        public string koi_teq_err1;
+        public string koi_teq_err2;
+        public double koi_insol;
+        public double koi_insol_err1;
+        public double koi_insol_err2;
+        public double koi_model_snr;
+        public double koi_tce_plnt_num;
+        public string koi_tce_delivname;
+        public double koi_steff;
+        public double koi_steff_err1;
+        public double koi_steff_err2;
+        public double koi_slogg;
+        public double koi_slogg_err1;
+        public double koi_slogg_err2;
+        public double koi_srad;
+        public double koi_srad_err1;
+        public double koi_srad_err2;
+        public string ra_str;
+        public string dec_str;
+        public double koi_kepmag;
+        public string koi_kepmag_err;
 
 
     };
@@ -104,19 +104,23 @@ public struct Planeta_json
             Stream objStream;
             objStream = wrGETURL.GetResponse().GetResponseStream();
             StreamReader objReader = new StreamReader(objStream);
-            string sLine = "";
-            int i = 0;
+            string jsonString = objReader.ReadToEnd();
+            jsonString = jsonString.Replace("[", "");
+            jsonString = jsonString.Replace("]", "");
+            Debug.Log(jsonString);
 
-            while (sLine != null)
+            // Deserializar el JSON en un objeto Planeta_json
+            ultimo_planeta = JsonUtility.FromJson<Planeta_json>(jsonString);
+
+            // Agrega el último planeta a la lista de planetas_leidos
+            if (planetas_leidos == null)
             {
-                i++;
-                sLine = objReader.ReadLine();
-
-            ultimo_planeta = sLine;
-                planetas_leidos[i] = ultimo_planeta;
-
+                planetas_leidos = new List<Planeta_json>();
             }
+
+            planetas_leidos.Add(ultimo_planeta);
         }
+
 
         private void createURLRequest()
         {
