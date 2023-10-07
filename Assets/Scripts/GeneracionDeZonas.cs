@@ -27,7 +27,7 @@ public class GeneradorDeCubos : MonoBehaviour
             cubo.transform.LookAt(esfera.position);
 
             // Escalar el cubo para que esté al 50% dentro de la esfera
-            float escala = Random.Range(0.25f, 0.5f);
+            float escala = Random.Range(0.1f, 0.2f);
             cubo.transform.localScale = new Vector3(escala, escala, escala);
         }
     }
