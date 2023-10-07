@@ -6,8 +6,8 @@ public class GeneradorDeCubos : MonoBehaviour
 {
     public GameObject cuboPrefab; // El prefab del cubo que se generará
     public Transform esfera; // La esfera alrededor de la cual se generarán los cubos
-    public float radioEsfera = 1.0f; // El radio de la esfera
-    public int cantidadDeCubos = 20; // La cantidad de cubos a generar
+    [SerializeField] public float radioEsfera; // El radio de la esfera
+    [SerializeField] public int cantidadDeCubos; // La cantidad de cubos a generar
 
     void Start()
     {
@@ -22,14 +22,14 @@ public class GeneradorDeCubos : MonoBehaviour
             Vector3 posicionAleatoria = Random.onUnitSphere * radioEsfera;
 
             // Instanciar un cubo en la posición aleatoria
-            GameObject cubo = Instantiate(cuboPrefab, posicionAleatoria, Quaternion.identity);
-
+            GameObject cubo = Instantiate(cuboPrefab, posicionAleatoria, Quaternion.identity, esfera);
             // Alinear el cubo con la superficie de la esfera
             cubo.transform.LookAt(esfera.position);
 
             // Escalar el cubo para que esté al 50% dentro de la esfera
-            float escala = Random.Range(0.5f, 1.0f);
+            float escala = Random.Range(0.1f, 0.2f);
             cubo.transform.localScale = new Vector3(escala, escala, escala);
         }
     }
 }
+
